@@ -13,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import fetchData from "@/utils/fetchData";
 import wrapPromise from "@/utils/wrapPromise";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
