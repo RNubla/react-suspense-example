@@ -42,7 +42,7 @@ function PostForm() {
 	}
 
 	function resetForm() {
-		reset(resource.read());
+		reset();
 	}
 
 	return (
