@@ -1,4 +1,3 @@
-import wrapPromise from "./wrapPromise"
 
 // function fetchData<T>(url: string) {
 //     let data;
