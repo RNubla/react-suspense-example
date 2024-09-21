@@ -11,8 +11,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import fetchData from "@/utils/fetchData";
+import wrapPromise from "@/utils/wrapPromise";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -21,15 +22,18 @@ const formSchema = z.object({
 	title: z.string(),
 	body: z.string(),
 });
-const resource = fetchData<z.infer<typeof formSchema>[]>(
-	"https://jsonplaceholder.typicode.com/posts",
+// const resource = fetchData<z.infer<typeof formSchema>>(
+// 	"https://jsonplaceholder.typicode.com/posts/e",
+// );
+const resource = wrapPromise<z.infer<typeof formSchema>>(
+	fetchData("https://jsonplaceholder.typicode.com/posts/1"),
 );
 
 function PostForm() {
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		mode: "onChange",
-		defaultValues: resource.read()[0],
+		defaultValues: resource.read(),
 	});
 
 	const { reset } = form;
@@ -39,7 +43,7 @@ function PostForm() {
 	}
 
 	function resetForm() {
-		reset(resource.read()[0]);
+		reset(resource.read());
 	}
 
 	return (
@@ -106,4 +110,5 @@ function PostForm() {
 		</Card>
 	);
 }
-export { PostForm };
+// export { PostForm };
+export default PostForm;

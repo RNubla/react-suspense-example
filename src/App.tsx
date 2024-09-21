@@ -1,8 +1,9 @@
-import { Posts } from "./component/posts";
+// import { Posts } from "./component/posts";
 import React from "react";
 // const Posts = React.lazy(() => import("./component/posts"));
 import { ErrorBoundary } from "./component/ErrorBoundary";
-import { PostForm } from "./component/FormPost";
+// import { PostForm } from "./component/FormPost";
+import PostForm from "./component/FormPost";
 
 function App() {
 	return (
