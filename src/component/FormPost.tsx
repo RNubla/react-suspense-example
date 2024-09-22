@@ -10,9 +10,11 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import fetchData from "@/utils/fetchData";
 import wrapPromise from "@/utils/wrapPromise";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -29,10 +31,17 @@ const resource = wrapPromise<z.infer<typeof formSchema>>(
 );
 
 function PostForm() {
+	// const queryClient = useQueryClient();
+
+	const { data: postData } = useSuspenseQuery({
+		queryKey: ["post"],
+		queryFn: resource.read,
+	});
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		mode: "onChange",
-		defaultValues: resource.read(),
+		// defaultValues: resource.read(),
+		defaultValues: postData,
 	});
 
 	const { reset } = form;
@@ -92,11 +101,9 @@ function PostForm() {
 								<FormItem>
 									<FormLabel>Body</FormLabel>
 									<FormControl>
-										<Input placeholder="shadcn" {...field} />
+										<Textarea rows={5} placeholder="shadcn" {...field} />
 									</FormControl>
-									<FormDescription>
-										This is your public display name.
-									</FormDescription>
+									<FormDescription>Article Content</FormDescription>
 									<FormMessage />
 								</FormItem>
 							)}
